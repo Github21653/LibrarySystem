@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Home</h1>
+    <div class="container text-center">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+        <p>This is your dashboard.</p>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        <!-- Message display -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %} mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

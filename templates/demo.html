@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requests</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>My Book Requests</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                    <tr>
+                        <td>{{ request.book.name }}</td>
+                        <td>{{ request.request_date|date:"M d, Y" }}</td>
+                        <td>
+                            <span class="badge {% if request.status == 'approved' %}bg-success
+                                             {% elif request.status == 'rejected' %}bg-danger
+                                             {% elif request.status == 'returned' %}bg-info
+                                             {% else %}bg-warning{% endif %}">
+                                {{ request.status|title }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if request.due_date %}
+                                {{ request.due_date|date:"M d, Y" }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+MY Requests
+<nav class="navbar">
+    <a href="/" class="navbar-brand">Library System</a>
+    <div class="d-flex gap-3 align-items-center">
+        <a href="{% url 'my_requests' %}" class="text-white text-decoration-none">Check Requests Status</a>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </div>
+</nav>
+
+VIEW_BOOKS NAVBAR

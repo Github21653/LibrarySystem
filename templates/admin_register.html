@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin_viewBooks.css' %}">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <a href="/" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+                <i class="bi bi-bootstrap me-2" style="font-size: 1.5rem;"></i>
+                <span class="fs-4">Book Store</span>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link text-white">
+                        <i class="bi bi-book me-2"></i> All Books
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'add_book' %}" class="nav-link text-white">
+                        <i class="bi bi-file-plus me-2"></i> Add Books
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'manage_requests' %}" class="nav-link text-white">
+                        <i class="bi bi-person-plus me-2"></i> Requests
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin_register' %}" class="nav-link active">
+                        <i class="bi bi-person-plus me-2"></i> Register Admin
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong>{{user.first_name}}</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark shadow">
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="registration-form">
+                <h2 class="form-title">Register New Admin</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="email" name="{{ form.email.name }}" class="form-control" placeholder="Email" required>
+                        {% if form.email.errors %}
+                            <div class="text-danger">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" name="{{ form.first_name.name }}" class="form-control" placeholder="First Name" required>
+                        {% if form.first_name.errors %}
+                            <div class="text-danger">{{ form.first_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" name="{{ form.last_name.name }}" class="form-control" placeholder="Last Name" required>
+                        {% if form.last_name.errors %}
+                            <div class="text-danger">{{ form.last_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password" name="{{ form.password.name }}" class="form-control" placeholder="Password" required>
+                        {% if form.password.errors %}
+                            <div class="text-danger">{{ form.password.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} mb-3">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-primary w-100">Register Admin</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
